@@ -6,6 +6,7 @@ import com.example.page.yopmail.YOPMailHomePage;
 import com.example.service.ComputeEngineFormCreator;
 import com.example.service.TestDataReader;
 import com.example.steps.GoogleCloudSteps;
+import com.example.util.Utils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,7 +30,7 @@ public class Hardcore extends AbstractTest {
                 .clickCopyToClipboardButton();
         String yopMailTab = getCurrentTabHandle();
         switchToTab(calculatorTab);
-        GoogleCloudSteps.sendComputeEngineResultsToEMail(PASTE_FROM_CLIPBOARD);
+        GoogleCloudSteps.sendComputeEngineResultsToEMail(Utils.getTextFromClipboard());
         switchToTab(yopMailTab);
         String actualResult = new EMailGeneratorPage()
                 .clickCheckInboxButton()

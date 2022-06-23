@@ -2,10 +2,7 @@ package com.example.test;
 
 import com.example.driver.DriverSingleton;
 import com.example.util.TestListener;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -18,7 +15,6 @@ import java.util.List;
 public abstract class AbstractTest {
 
     protected WebDriver driver;
-    protected final static String PASTE_FROM_CLIPBOARD = Keys.CONTROL + "v";
 
     @BeforeMethod()
     public void setUp()

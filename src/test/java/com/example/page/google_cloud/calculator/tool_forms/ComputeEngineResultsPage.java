@@ -21,18 +21,18 @@ public class ComputeEngineResultsPage extends PricingCalculatorMainFrame {
     }
 
     public ComputeEngineResultsPage clickEMailEstimateButton() {
-        waitUntilElementIsClickable(eMailEstimateButton).click();
-        logger.info("Sent the calculation to e-mail");
+        scrollIntoView(waitUntilElementIsClickable(eMailEstimateButton)).click();
         return this;
     }
 
     public ComputeEngineResultsPage inputEMail(String eMail) {
-        waitUntilElementIsVisible(eMailInput).sendKeys(eMail);
+        scrollIntoView(waitUntilElementIsVisible(eMailInput)).sendKeys(eMail);
         return this;
     }
 
     public ComputeEngineResultsPage clickSendEMailButton() {
         scrollIntoView(waitUntilElementIsClickable(sendEMailButton)).click();
+        logger.info("Sent the calculation to e-mail");
         return this;
     }
 }

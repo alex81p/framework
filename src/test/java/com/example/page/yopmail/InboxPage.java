@@ -10,15 +10,19 @@ import java.time.Duration;
 
 public class InboxPage extends AbstractPage {
 
+    private final String inboxFrameName = "ifinbox";
+    private final String mailFrameName = "ifmail";
+    private final By estimatedMonthlyCostLetterLocator = By.xpath("//div[text()='Google Cloud Price Estimate']/ancestor::button");
+
     @FindBy(xpath = "//h2[contains(text(),'Estimated Monthly Cost:')]")
     private WebElement estimatedMonthlyCost;
 
     public InboxPage openEstimatedMonthlyCostLetter() {
-        By estimatedMonthlyCostLetterLocator = By.xpath("//div[text()='Google Cloud Price Estimate']/ancestor::button");
         driver.switchTo().defaultContent();
         new WebDriverWait(driver, Duration.ofSeconds(20),Duration.ofSeconds(3))
                 .until(driver -> {
-                    driver.switchTo().frame("ifinbox");
+                    clickCaptchaIfThrown();
+                    driver.switchTo().frame(inboxFrameName);
                     if (elementExists(estimatedMonthlyCostLetterLocator)) {
                         return driver.findElement(estimatedMonthlyCostLetterLocator);
                     }
@@ -31,7 +35,7 @@ public class InboxPage extends AbstractPage {
 
     public String getEstimatedMonthlyCost() {
         driver.switchTo().defaultContent();
-        driver.switchTo().frame("ifmail");
+        driver.switchTo().frame(mailFrameName);
         return estimatedMonthlyCost.getText();
     }
 }

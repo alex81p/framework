@@ -8,6 +8,10 @@ import org.openqa.selenium.WebElement;
 
 public class PricingCalculatorMainFrame extends AbstractPage {
 
+    private final String toolLocator = "//md-pagination-wrapper//div[text()='%s']";
+    private final String frameLocator = "//article[@id='cloud-site']//iframe";
+
+
     public ComputeEngineFormPage selectComputeEngine() {
         switchToCalculatorFrame();
         selectTool("Compute Engine");
@@ -15,19 +19,19 @@ public class PricingCalculatorMainFrame extends AbstractPage {
 
     }
     private void selectTool(String tool) {
-        waitUntilElementIsClickable(By.xpath(String.format("//md-pagination-wrapper//div[text()='%s']", tool))).click();
+        waitUntilElementIsClickable(By.xpath(String.format(toolLocator, tool))).click();
     }
 
     public void switchToCalculatorFrame() {
         driver.switchTo().defaultContent();
-        driver.switchTo().frame(driver.findElement(By.xpath("//article[@id='cloud-site']//iframe")));
+        driver.switchTo().frame(driver.findElement(By.xpath(frameLocator)));
         driver.switchTo().frame("myFrame");
     }
 
     public WebElement scrollIntoView(WebElement webElement) {
-        int verticalPosition = webElement.getLocation().getY();
+        int verticalPosition = webElement.getLocation().getY() - driver.manage().window().getSize().getHeight() / 2;
         driver.switchTo().defaultContent();
-        ((JavascriptExecutor) driver).executeScript(String.format("window.scrollTo(0,%s);", verticalPosition - 200));
+        ((JavascriptExecutor) driver).executeScript(String.format("window.scrollTo(0,%s);", verticalPosition));
         switchToCalculatorFrame();
         return webElement;
     }

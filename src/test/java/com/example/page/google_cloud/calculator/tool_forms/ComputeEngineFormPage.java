@@ -44,6 +44,8 @@ public class ComputeEngineFormPage extends PricingCalculatorMainFrame {
     @FindBy(xpath = "//form[@name='ComputeEngineForm']//button[normalize-space(text())='Add to Estimate']")
     private WebElement addInstancesToEstimateButton;
 
+    private final String optionLocator = "//div[@id='%s']//div[normalize-space(text())='%s']";
+
     public ComputeEngineFormPage() {
         super();
         switchToCalculatorFrame();
@@ -139,8 +141,8 @@ public class ComputeEngineFormPage extends PricingCalculatorMainFrame {
 
     private void selectOption(WebElement selector, String option) {
         scrollIntoView(waitUntilElementIsClickable(selector)).click();
-        String xpath = String.format("//div[@id='%s']//div[normalize-space(text())='%s']",
+        String xpath = String.format(optionLocator,
                 selector.getAttribute("aria-owns"), option);
-        waitUntilElementIsClickable(By.xpath(xpath)).click();
+        scrollIntoView(waitUntilElementIsClickable(By.xpath(xpath))).click();
     }
 }

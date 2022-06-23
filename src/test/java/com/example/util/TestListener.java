@@ -17,7 +17,10 @@ import java.time.format.DateTimeFormatter;
 
 public class TestListener implements ITestListener {
 
-    private Logger log = LogManager.getRootLogger();
+    private final Logger log = LogManager.getRootLogger();
+    private final String screenshotsFolder = ".//target/screenshots/";
+    private final String screenshotFileExtension = ".png";
+    private final String screenshotDateFormat = "uuuu-MM-dd_HH-mm-ss";
 
     public void onTestFailure(ITestResult iTestResult) {
         saveScreenshot();
@@ -29,16 +32,16 @@ public class TestListener implements ITestListener {
                 .getScreenshotAs(OutputType.FILE);
         try {
             FileUtils.copyFile(screenCapture, new File(
-                    ".//target/screenshots/"
+                    screenshotsFolder
                     + getCurrentTimeAsString() +
-                    ".png"));
+                    screenshotFileExtension));
         } catch (IOException e) {
             log.error("Failed to save screenshot: " + e.getLocalizedMessage());
         }
     }
 
     private String getCurrentTimeAsString(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "uuuu-MM-dd_HH-mm-ss" );
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(screenshotDateFormat);
         return ZonedDateTime.now().format(formatter);
     }
 }

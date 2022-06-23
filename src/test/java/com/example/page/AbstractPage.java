@@ -15,6 +15,8 @@ public abstract class AbstractPage {
     protected WebDriver driver;
     protected final Logger logger = LogManager.getRootLogger();
     protected static final Duration TIMEOUT = Duration.ofSeconds(30);
+    private static final By CAPTCHA = By.xpath("//iframe[starts-with(@name,'a-')and starts-with(@src, 'https://www.google.com/recaptcha')]");
+    private static final By CAPTCHA_CHECKBOX = By.xpath("//div[@class='recaptcha-checkbox-border']");
 
     protected AbstractPage() {
         driver = DriverSingleton.getDriver();
@@ -34,6 +36,14 @@ public abstract class AbstractPage {
     protected WebElement waitUntilElementIsVisible(WebElement webElement) {
         return new WebDriverWait(driver, TIMEOUT)
                 .until(ExpectedConditions.visibilityOf(webElement));
+    }
+
+    protected void clickCaptchaIfThrown() {
+        if (elementExists(CAPTCHA)) {
+            logger.info("Captcha is thrown");
+            waitUntilElementIsClickable(CAPTCHA_CHECKBOX).click();
+            logger.info("Passed the captcha");
+        }
     }
 
     protected boolean elementExists(By by) {

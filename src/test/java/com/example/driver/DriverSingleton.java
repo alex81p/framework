@@ -1,6 +1,8 @@
 package com.example.driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -31,7 +33,8 @@ public class DriverSingleton {
                     driver = new ChromeDriver();
                 }
             }
-            driver.manage().window().maximize();
+            driver.manage().window().setSize(new Dimension(1550, 838));
+            driver.manage().window().setPosition(new Point(0,0));
         }
         return driver;
     }
